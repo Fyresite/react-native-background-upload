@@ -318,7 +318,7 @@ public class UploaderModule extends ReactContextBaseJavaModule implements Lifecy
   @Override
   public void onHostDestroy() {
     try {
-      uploadReceiver.unregister(reactContext, uploadStateManager);
+      uploadReceiver.unregister(reactContext);
     } catch (Exception e) {
       e.printStackTrace();
     }
