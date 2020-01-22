@@ -95,7 +95,6 @@ public class UploadReceiver extends UploadServiceBroadcastReceiver {
         }
     }
 
-    @Override
     public void register(final Context context, UploadStateManager uploadStateManager) { 
         super.register(context);
 
