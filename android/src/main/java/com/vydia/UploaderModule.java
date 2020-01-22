@@ -21,6 +21,7 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import com.vydia.RNUploader.UploadReceiver;
+import com.vydia.RNUploader.UploadStateManager;
 import com.vydia.RNUploader.NotificationActionsReceiver;
 
 import net.gotev.uploadservice.BinaryUploadRequest;
@@ -42,6 +43,7 @@ public class UploaderModule extends ReactContextBaseJavaModule implements Lifecy
   private static final String TAG = "UploaderBridge";
 
   private UploadReceiver uploadReceiver;
+  private UploadStateManager uploadStateManager;
   private ReactApplicationContext reactContext;
 
   public UploaderModule(ReactApplicationContext reactContext) {
@@ -50,9 +52,12 @@ public class UploaderModule extends ReactContextBaseJavaModule implements Lifecy
     this.reactContext = reactContext;
     reactContext.addLifecycleEventListener(this);
 
+    uploadStateManager = new UploadStateManager();
+    
+
     if (uploadReceiver == null) {
       uploadReceiver = new UploadReceiver();
-      uploadReceiver.register(reactContext);
+      uploadReceiver.register(reactContext, uploadStateManager);
     }
 
     UploadService.NAMESPACE = reactContext.getApplicationInfo().packageName;
@@ -271,6 +276,7 @@ public class UploaderModule extends ReactContextBaseJavaModule implements Lifecy
       }
 
       String uploadId = request.startUpload();
+      uploadStateManager.setUploadProgress(uploadId, new Integer(0));
       promise.resolve(uploadId);
     } catch (Exception exc) {
       Log.e(TAG, exc.getMessage(), exc);
