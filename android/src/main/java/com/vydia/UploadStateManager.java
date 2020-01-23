@@ -1,11 +1,11 @@
 package com.vydia.RNUploader;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 class UploadStateManager {
-  private HashMap<String, Integer> uploadProgress;
+  private ConcurrentHashMap<String, Integer> uploadProgress;
   UploadStateManager() {
-    this.uploadProgress = new HashMap<String, Integer>();
+    this.uploadProgress = new ConcurrentHashMap<String, Integer>();
   }
 
   int getUploadProgress(String uploadId) {
