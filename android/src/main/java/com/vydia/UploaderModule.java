@@ -304,6 +304,12 @@ public class UploaderModule extends ReactContextBaseJavaModule implements Lifecy
     }
   }
 
+  @ReactMethod
+  public void getProgress(String uploadId, final Promise promise) {
+    int progress = uploadStateManager.getUploadProgress(uploadId);
+    promise.resolve(progress);
+  }
+
   @Override
   public void onHostResume() {
     if (uploadReceiver != null) {

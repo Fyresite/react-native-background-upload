@@ -96,6 +96,13 @@ export const cancelUpload = (cancelUploadId: string): Promise<boolean> => {
   return NativeModule.cancelUpload(cancelUploadId);
 }
 
+export const getProgress = (uploadId: string): Promise<number> => {
+  if (typeof uploadId !== 'string') {
+    return Promise.reject(new Error('Upload ID must be a string'));
+  }
+  return NativeModule.getProgress(uploadId);
+}
+
 /*
 Listens for the given event on the given upload ID (resolved from startUpload).  
 If you don't supply a value for uploadId, the event will fire for all uploads.
