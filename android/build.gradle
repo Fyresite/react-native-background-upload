@@ -36,5 +36,7 @@ repositories {
 }
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile 'net.gotev:uploadservice-okhttp:3.4.2'
+    // compile 'net.gotev:uploadservice-okhttp:3.4.2'
+    compile files('uploadservice-okhttp-release.aar')
+    compile files('uploadservice-release.aar')
 }
