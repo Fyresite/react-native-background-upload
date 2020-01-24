@@ -243,14 +243,14 @@ RCT_EXPORT_METHOD(getProgress: (NSString *)uploadId resolve:(RCTPromiseResolveBl
             if ([uploadTask.taskDescription isEqualToString:uploadId]){
                 // == checks if references are equal, while isEqualToString checks the string value
                 // [uploadTask cancel];
-                double uploaded = (double) [task totalBytesSent];
-                double total = (double) [task totalBytesExpectedToSend];
+                double uploaded = (double) [uploadTask countOfBytesSent];
+                double total = (double) [uploadTask countOfBytesExpectedToSend];
                 double progress = (uploaded / total) * 100;
-                resolve(progress);
-                return
+                resolve([NSNumber numberWithDouble: progress]);
+                return;
             }
         }
-        resolve((double) -1.0)
+        resolve([NSNumber numberWithDouble: -1.0]);
     }];
 }
 
