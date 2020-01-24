@@ -247,8 +247,10 @@ RCT_EXPORT_METHOD(getProgress: (NSString *)uploadId resolve:(RCTPromiseResolveBl
                 double total = (double) [task totalBytesExpectedToSend];
                 double progress = (uploaded / total) * 100;
                 resolve(progress);
+                return
             }
         }
+        resolve((double) -1.0)
     }];
 }
 
