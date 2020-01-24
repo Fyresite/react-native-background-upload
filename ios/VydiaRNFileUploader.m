@@ -233,6 +233,24 @@ RCT_EXPORT_METHOD(cancelUpload: (NSString *)cancelUploadId resolve:(RCTPromiseRe
     }];
     resolve([NSNumber numberWithBool:YES]);
 }
+/*
+ * Gets progress of file upload
+ * Accepts upload ID as a first argument
+ */
+RCT_EXPORT_METHOD(getProgress: (NSString *)uploadId resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [_urlSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        for (NSURLSessionTask *uploadTask in uploadTasks) {
+            if ([uploadTask.taskDescription isEqualToString:uploadId]){
+                // == checks if references are equal, while isEqualToString checks the string value
+                // [uploadTask cancel];
+                double uploaded = (double) [task totalBytesSent];
+                double total = (double) [task totalBytesExpectedToSend];
+                double progress = (uploaded / total) * 100;
+                resolve(progress);
+            }
+        }
+    }];
+}
 
 - (NSData *)createBodyWithBoundary:(NSString *)boundary
                          path:(NSString *)path
